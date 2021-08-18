@@ -1,0 +1,138 @@
+body {
+  background-color:  #1e2020;  
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  vertical-align: top;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+  color: aliceblue;
+}
+
+/* video and basic layout */
+.main-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-content: space-between;
+}
+
+.videos{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-content: space-between;
+}
+
+#user-video {
+  border-radius: 25px;
+  padding: 10px;
+}
+
+#client-video {
+  border-radius: 25px;
+}
+
+/* chat */
+
+.chat {
+  flex-grow: 2;
+}
+
+#chatlist{
+  display: none;
+  background-color: rgb(85, 82, 82);
+}
+
+/* List */
+ul {
+  counter-reset: index;  
+  padding: 0;
+}
+
+/* List element */
+li {
+  counter-increment: index; 
+  display: flex;
+  align-items: center;
+  padding: 25px 0;
+  box-sizing: border-box;
+}
+
+
+/* Element counter */
+li::before {
+  content: counters(index, ".", decimal-leading-zero);
+  font-size: 1.5rem;
+  text-align: right;
+  font-weight: bold;
+  min-width: 50px;
+  padding-right: 12px;
+  font-variant-numeric: tabular-nums;
+  align-self: flex-start;
+  background-image: linear-gradient(to bottom, aquamarine, orangered);
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* Element separation */
+li + li {
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+
+
+/* icons */
+#gg-comment {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs,1));
+  width: 20px;
+  height: 16px;
+  border: 2px solid;
+  border-bottom: 0;
+  box-shadow:
+      -6px 8px 0 -6px,
+      6px 8px 0 -6px
+}
+#gg-comment::after,
+#gg-comment::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 8px
+}
+#gg-comment::before {
+  border: 2px solid;
+  border-top-color: transparent;
+  border-bottom-left-radius: 20px;
+  right: 4px;
+  bottom: -6px;
+  height: 6px
+}
+#gg-comment::after {
+  height: 2px;
+  background: currentColor;
+  box-shadow: 0 4px 0 0;
+  left: 4px;
+  top: 4px
+}
+
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
