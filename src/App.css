@@ -1,4 +1,4 @@
-body {
+.body {
   background-color:  #1e2020;  
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -47,7 +47,6 @@ code {
 }
 
 #chatlist{
-  display: none;
   background-color: rgb(85, 82, 82);
 }
 
@@ -62,12 +61,12 @@ li {
   counter-increment: index; 
   display: flex;
   align-items: center;
-  padding: 25px 0;
   box-sizing: border-box;
+  padding: 25px 0;
+  border-radius: 25px;
 }
 
-
-/* Element counter */
+/* Element counter 
 li::before {
   content: counters(index, ".", decimal-leading-zero);
   font-size: 1.5rem;
@@ -79,6 +78,23 @@ li::before {
   align-self: flex-start;
   background-image: linear-gradient(to bottom, aquamarine, orangered);
   background-attachment: fixed;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+} */
+
+/* My Name Text */
+.message-name {
+  font-size: 1.5rem;
+  text-align: right;
+  font-weight: bold;
+  min-width: 50px;
+  padding-right: 12px;
+  font-variant-numeric: tabular-nums;
+  align-self: flex-start;
+  background-image: linear-gradient(to bottom, aquamarine, orangered);
+  background-attachment: fixed;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -87,52 +103,5 @@ li::before {
 /* Element separation */
 li + li {
   border-top: 1px solid rgba(255,255,255,0.2);
-}
-
-
-
-/* icons */
-#gg-comment {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  transform: scale(var(--ggs,1));
-  width: 20px;
-  height: 16px;
-  border: 2px solid;
-  border-bottom: 0;
-  box-shadow:
-      -6px 8px 0 -6px,
-      6px 8px 0 -6px
-}
-#gg-comment::after,
-#gg-comment::before {
-  content: "";
-  display: block;
-  box-sizing: border-box;
-  position: absolute;
-  width: 8px
-}
-#gg-comment::before {
-  border: 2px solid;
-  border-top-color: transparent;
-  border-bottom-left-radius: 20px;
-  right: 4px;
-  bottom: -6px;
-  height: 6px
-}
-#gg-comment::after {
-  height: 2px;
-  background: currentColor;
-  box-shadow: 0 4px 0 0;
-  left: 4px;
-  top: 4px
-}
-
-.dot {
-  height: 25px;
-  width: 25px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
+  border-radius: 25px;
 }

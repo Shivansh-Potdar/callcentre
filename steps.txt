@@ -1,0 +1,3 @@
+move server.js send to emit
+
+make emit reciever in app.js

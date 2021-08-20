@@ -1,7 +1,7 @@
 import React ,{ Component } from 'react';
+import Websocket from 'react-websocket';
 import './App.css';
-
-const io = require("socket.io")();
+import './login.css'
 
 function CamUse(){
   // Defualt Camera options
@@ -32,72 +32,111 @@ function CamUse(){
   });
 };
 
-CamUse();
-
 class App extends Component {
   constructor() {
     super();
     this.state = { 
+      name: "",
       messages: [
-        {id: 1, text: "Todo 1"},
-        {id: 2, text: "Todo 2"},
-        {id: 3, text: "Todo 3"}
+        {name: "Shubham", text: "Hello!", key: 1},
       ],
-      chatState: false
+      currentKey: 1,
+      signedIn: false
     };
     this.handleMessage = this.handleMessage.bind(this);
-    this.showChat = this.showChat.bind(this);
+    this.updateName = this.updateName.bind(this);
   }
 
-  handleMessage(e) {
-    e.preventDefault();
-    this.state.messages.push({
-      id: 5,
-      message: e
+  signIn(){
+    this.setState({
+      signedIn: true
+    })
+  }
+
+  updateName(e){
+    this.setState({
+      name: e.target.value
     });
   }
 
-  showChat(e) {
-    e.preventDefault();
-    console.log("Chat on!");
+  sendMessage(e){
+    this.refWebSocket.sendMessage(JSON.stringify({
+      name: this.state.name,
+      text: "message",
+    }));
+  }
+
+  handleMessage(e) {
     this.setState({
-      chatState: !this.state.chatState
+      key: this.state.key++
     })
-    document.getElementById("chatlist").style.display = this.state.chatState ? "block": "none";
+
+    this.state.messages.push({
+      name: JSON.parse(e).name,
+      text: JSON.parse(e).text,
+      key: this.state.key
+    });
+    console.log(this.state.messages);
   }
 
   render(){
-    return (
-      <body>
-        <code>
-          <h1>
-            Shivansh Call Centre
-          </h1>
-        </code>
-        <div className="main-content">
-          <div className="videos">
-            <div className="client">
-              <video id="client-video"/>
+    if(this.state.signedIn){
+      return (
+        <div className="body">
+          {CamUse()}
+          <code>
+            <h1>
+              Shivansh Call Centre
+            </h1>
+            <h2>
+              Logged in as {this.state.name}
+            </h2>
+          </code>
+          <div className="main-content">
+            <div className="videos">
+              <div className="client">
+                <video id="client-video"/>
+              </div>
+              <div className='user'>
+                <video id="user-video" onClick={this.sendMessage.bind(this)}/>
+              </div>
             </div>
-            <div className='user'>
-              <video id="user-video"/>
+            <div className="chat">
+            <Websocket url="ws://localhost:8080" onMessage={this.handleMessage} reconnect={true}
+            ref={Websocket => {
+                    this.refWebSocket = Websocket;
+                  }
+                }/>
+              <ul id="chatlist">
+                {
+                  this.state.messages.map(message => {
+                    return (
+                      <>
+                        <li key={message.key}><div className="message-name">{message.name}</div>{message.text}</li>
+                      </>
+                      
+                    )
+                  })
+                }
+              </ul>
             </div>
-          </div>
-          <div className="chat">
-          <i id="gg-comment" className="dot" onClick={this.showChat}/>
-            <ul id="chatlist">
-              {
-                this.state.messages.map(message => {
-                  return (
-                    <li key={message.id}>{message.text}</li>
-                  )
-                })
-              }
-            </ul>
           </div>
         </div>
-      </body>
-    );
+      );
+    } else {
+      return(
+        <><div className="login-body">
+          
+          <form className="login" >
+            <input type="text" placeholder="Username" onChange={this.updateName}/>
+            <button onClick={this.signIn.bind(this)}>Login</button><br/>
+            <code style={{color: 'rgb(85, 82, 82)'}}>
+              Name: {this.state.name}
+            </code>
+          </form>
+        </div></>
+      );
+    }
   }
 }
 
